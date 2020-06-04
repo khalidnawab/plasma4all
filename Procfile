@@ -1,0 +1,1 @@
+web: gunicorn plasma4me.wsgi --log-file -
