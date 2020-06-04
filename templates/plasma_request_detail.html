@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+    <div class="card my-4">
+    <h6 class="card-header">{% block title %} {{ object.user}}  | {{ object.created_on }} {% endblock title %}</h6>
+      <div class="card-body">
+          <p class="card-text ">Name: {{ object.user.get_full_name }}</p>
+          <p class="card-text ">Gender: {{ object.get_gender_display}}</p>
+          <p class="card-text ">DOB: {{ object.birth_date}}</p>
+          <p class="card-text ">Phone: {{ object.phone}}</p>
+          <p class="card-text ">E-mail: {{ object.user.email }}</p>
+          <p class="card-text ">Address: {{ object.address}}</p>
+          <p class="card-text ">City: {{ object.city}}</p>
+          <p class="card-text ">Province: {{ object.get_province_display}}</p>
+          <p class="card-text ">COVID-19 Diagnosis Date: {{ object.date_COVID_19_diagnosed}}</p>
+          <p class="card-text ">Hospital that labelled positive: {{ object.hospital_which_labelled_positive}}</p>
+          <p class="card-text ">Hospital that labelled negative:{{ object.hospital_which_labelled_negative}}</p>
+          <p class="card-text ">Lab that labelled positive: {{ object.lab_which_labelled_positive}}</p>
+          <p class="card-text ">Lab that labelled negative: {{ object.lab_which_labelled_negative}}</p>
+
+          {%  if object.plasma_completed == 1 %}
+            <a href="{% url 'undo_plasma_request'  object.pk %}" class="btn btn-primary btn-sm" onclick="return confirm('Mark this request as not-done, proceed?')">Mark as not done</a>
+            <a href="{% url 'plasma_requests' %}" class="btn btn-primary btn-sm">Cancel</a>
+          {% else %}
+            <a href="{% url 'complete_plasma_request' object.pk %}" class="btn btn-primary btn-sm" onclick="return confirm('Mark this request as completed, proceed?')">Mark As Done</a>
+            <a href="{% url 'plasma_requests' %}" class="btn btn-primary btn-sm">Cancel</a>
+          {% endif %}
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

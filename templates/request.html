@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white text-center"> Request submitted!</h3>
+                    <p class="text-light text-center"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+    {% if user.is_authenticated %}
+
+        <div class="container-fluid ">
+            <div class="col">
+                <div class="row justify-content-center">
+                   {% load static %}
+                <div class="col-md-2 card mb-4  mt-3">
+
+                    <p>Our team will get in touch with you soon.</p>
+                    <a href="{% url 'home'  %}" class="btn btn-primary btn-sm">OK</a>
+                    <p></p>
+                </div>
+                </div>
+
+            <br>
+            <br>
+            </div>
+        </div>
+    {% else %}
+        <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">You need to log in to view this page</h2>
+                    <a class="nav-link text-black font-weight-bold" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                    <h2 class="card-title">New user? Welcome! Click below to create and account:</h2>
+                    <a class="nav-link text-black font-weight-bold" href="{% url 'signup'%}">Register</a>
+
+                </div>
+        </div>
+    {% endif %}
+    </div>
+</div>
+{%endblock%}

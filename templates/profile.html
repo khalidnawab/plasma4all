@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white"> User Profile </h3>
+                    <a href="{% url 'edit_profile' %}" class="btn btn-success">Edit Demographics</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+    {% if user.is_authenticated %}
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+
+            <div class="card mb-4">
+
+                <div class="card-body">
+                    <h2 class="card-title">Username: {{ profile.username }}</h2>
+
+                     <p class="card-text text-muted h5">First name: {{ profile.first_name }}  </p>
+                     <p class="card-text text-muted h5">Last name: {{ profile.last_name }}  </p>
+                     <p class="card-text text-muted h5">E-mail: {{ profile.email }}  </p>
+                    <p class="card-text text-muted h5">Gender: {{ demographics.get_gender_display }}  </p>
+                    <p class="card-text text-muted h5">Date of birth: {{ demographics.birth_date}}  </p>
+                    <p class="card-text text-muted h5">Address: {{ demographics.address }}  </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    {% else %}
+       <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">You need to log in to view this page</h2>
+                    <a class="nav-link text-black font-weight-bold" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                </div>
+            </div>
+    {% endif %}
+    </div>
+</div>
+{%endblock%}

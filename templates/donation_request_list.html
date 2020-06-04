@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white">New Donation Requests</h3>
+                    <a href="{% url 'completed_donation_requests' %}" class="btn btn-primary btn-sm">See Completed Requests</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+    {% if user.is_authenticated %}
+        <!-- Blog Entries Column -->
+        <div class="col-md-8 mt-3 left">
+            {% for post in object_list %}
+            <div class="card mb-4">
+            <h6 class="card-header">{% block title %} {{ post.user}}  | {{ post.created_on }} <a href="{% url 'donation_request_detail' post.pk  %}" class="btn btn-primary btn-sm">Detail</a>{% endblock title %}</h6>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">You need to log in to view this page</h2>
+                    <a class="nav-link text-black font-weight-bold" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                </div>
+            </div>
+    {% endif %}
+    </div>
+</div>
+{%endblock%}
+

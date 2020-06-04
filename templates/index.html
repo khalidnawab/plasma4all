@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+        background-color: #fdfdfd;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+    .card {
+        box-shadow: 0 16px 48px #E3E7EB;
+    }
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white text-center"> Help is here!</h3>
+                    <p class="text-light text-center">Please choose from the options below.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        {%  if user.is_authenticated %}
+            {% load static %}
+             {% if user.is_staff %}
+          <div class="container-fluid ">
+            <div class="col">
+                <div class="row justify-content-center">
+
+                <div class="col-md-2 card mb-4  mt-3">
+
+                 <a href="{% url 'plasma_requests' %}" title="Requests for Plasma.">
+                    <img class="mx-auto d-block" src="{% static "icons/plasma_request.svg" %}"style="width:140px;height:185px;border:0;">
+                 </a>
+                </div>
+                <div class="col-md-2 card mb-4  mt-3">
+                 <a href="{% url 'donation_requests' %}" title="Requests for Donation.">
+                    <img class="mx-auto d-block" src="{% static "icons/donation_request.svg" %}" style="width:140px;height:185px;border:0;">
+                 </a>
+                 </div>
+
+                </div>
+
+            <br>
+            <br>
+            </div>
+        </div>
+
+
+                 {% else %}
+
+                 <div class="container-fluid ">
+            <div class="col">
+                <div class="row justify-content-center">
+
+                <div class="col-md-2 card mb-4  mt-3">
+
+                 <a href="{% url 'submitted'  1 %}" title="Find recovered COVID-19 patients in your area for potential plasma donation." onclick="return confirm('This will submit a request to receive plasma from a recovered COVID-19 patient, proceed?')">
+                    <img class="mx-auto d-block" src="{% static "icons/recieve.svg" %}"style="width:140px;height:185px;border:0;">
+                 </a>
+                </div>
+                <div class="col-md-2 card mb-4  mt-3">
+                 <a href="{% url 'submitted'  2 %}" title="Donate plasma to help someone if you have recovered from COVID-19." onclick="return confirm('This will submit a request on your behalf to donate plasma, proceed?')">
+                    <img class="mx-auto d-block" src="{% static "icons/donate.svg" %}" style="width:140px;height:185px;border:0;">
+                 </a>
+                 </div>
+
+                </div>
+
+            <br>
+            <br>
+            </div>
+        </div>
+
+
+                   {% endif %}
+    {% else %}
+        <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">You need to log in to view this page</h2>
+                    <a class="nav-link text-black font-weight-bold" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                    <h2 class="card-title">New user? Welcome! Click below to create and account:</h2>
+                    <a class="nav-link text-black font-weight-bold" href="{% url 'signup'%}">Register</a>
+
+                </div>
+        </div>
+    {% endif %}
+    </div>
+</div>
+{%endblock%}
