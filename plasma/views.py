@@ -7,6 +7,7 @@ from .models import Profile
 from django.core.mail import send_mail
 from django.views import generic
 from plasma4me.settings import ADMIN_EMAIL
+from django.contrib import messages
 
 # Create your views here.
 from plasma.forms import SignUpForm, DemographicsForm
@@ -70,23 +71,28 @@ def demographics_form(request):
 
 @login_required(login_url="/")
 def submitted(request, id):
-    user = Profile.objects.get(user=request.user)
-    if id == 2:
-        user.donation_request = True
-        user.save()
-        user_request = "donation"
-    elif id == 1:
-        user.plasma_request = True
-        user.save()
-        user_request = "Plasma"
-    send_mail(
-        'New Request for {}'.format(user_request),
-        'You have a new request for {}'.format(user_request),
-        'from@example.com',
-        [ADMIN_EMAIL],
-        fail_silently=False,
-    )
-    return render(request, "request.html")
+    if Profile.objects.filter(user=request.user).exists():
+        user = Profile.objects.get(user=request.user)
+        if id == 2:
+            user.donation_request = True
+            user.save()
+            user_request = "donation"
+        elif id == 1:
+            user.plasma_request = True
+            user.save()
+            user_request = "Plasma"
+        send_mail(
+            'New Request for {}'.format(user_request),
+            'You have a new request for {}'.format(user_request),
+            'from@example.com',
+            [ADMIN_EMAIL],
+            fail_silently=False,
+        )
+        return render(request, "request.html")
+    else:
+        messages.warning(request, 'You need to fill this form before you can submit a request.')
+        return redirect('profile')
+
 
 
 class DonationRequestsList(LoginRequiredMixin, generic.ListView):
