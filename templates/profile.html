@@ -38,14 +38,20 @@
             <div class="card mb-4">
 
                 <div class="card-body">
-                    <h2 class="card-title">Username: {{ profile.username }}</h2>
-
-                     <p class="card-text text-muted h5">First name: {{ profile.first_name }}  </p>
-                     <p class="card-text text-muted h5">Last name: {{ profile.last_name }}  </p>
-                     <p class="card-text text-muted h5">E-mail: {{ profile.email }}  </p>
-                    <p class="card-text text-muted h5">Gender: {{ demographics.get_gender_display }}  </p>
-                    <p class="card-text text-muted h5">Date of birth: {{ demographics.birth_date}}  </p>
-                    <p class="card-text text-muted h5">Address: {{ demographics.address }}  </p>
+                    <p class="card-text ">Name: {{ demographics.user.get_full_name }}</p>
+          <p class="card-text ">Gender: {{ demographics.get_gender_display}}</p>
+          <p class="card-text ">DOB: {{ demographics.birth_date}}</p>
+          <p class="card-text ">Phone: {{ demographics.phone}}</p>
+          <p class="card-text ">E-mail: {{ demographics.user.email }}</p>
+          <p class="card-text ">Address: {{ demographics.address}}</p>
+          <p class="card-text ">City: {{ demographics.city}}</p>
+          <p class="card-text ">Province: {{ demographics.get_province_display}}</p>
+          <p class="card-text ">COVID-19 Diagnosis Date: {{ demographics.date_COVID_19_diagnosed}}</p>
+                    <p class="card-text ">Blood Group: {{ demographics.blood_group}}</p>
+          <p class="card-text ">Hospital that labelled positive: {{ demographics.hospital_which_labelled_positive}}</p>
+          <p class="card-text ">Hospital that labelled negative:{{ demographics.hospital_which_labelled_negative}}</p>
+          <p class="card-text ">Lab that labelled positive: {{ demographics.lab_which_labelled_positive}}</p>
+          <p class="card-text ">Lab that labelled negative: {{ demographics.lab_which_labelled_negative}}</p>
 
                 </div>
             </div>

@@ -15,7 +15,9 @@ PROVINCES = (
     (3, "Balochistan"),
     (4, "Unspecified"),
     (5, "Islamabad Capital Territory"),
-    (6, "Azad Kashmir")
+    (6, "Azad Kashmir"),
+    (7, "Gilgit Baltistan"),
+    (8, "FATA"),
 )
 
 
@@ -31,6 +33,7 @@ class Profile(models.Model):
     gender = models.IntegerField(choices=GENDER, default=3)
     phone = models.IntegerField(default=0)
     date_COVID_19_diagnosed = models.DateField(null=True, blank=True)
+    blood_group=models.CharField(max_length=15, blank=True)
     hospital_which_labelled_positive = models.CharField(max_length=30, blank=True)
     hospital_which_labelled_negative = models.CharField(max_length=30, blank=True)
     lab_which_labelled_positive = models.CharField(max_length=30, blank=True)

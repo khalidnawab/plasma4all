@@ -180,3 +180,43 @@ class CompletedPlasmaRequestsList(LoginRequiredMixin, generic.ListView):
             Profile.objects.filter(plasma_completed=1)
                 .order_by("-created_on")
         )
+
+@login_required(login_url="/")
+def profile_page(request):
+    # load data from the user table
+    user = User.objects.get(username=request.user)
+    # we will check if the demographics on the user exist in the Profile table. If there is no data,
+    # a page displaying a form for user demographics is rendered, otherwise the page dispalying
+    # user data is displayed.
+    try:
+        demographics = Profile.objects.get(user=request.user)
+    except:
+        if request.method == "POST":
+            form = DemographicsForm(request.POST)
+            if form.is_valid():
+                new_profile = form.save(commit=False)
+                new_profile.user = request.user
+                new_profile.save()
+                return redirect("profile")
+        else:
+            form = DemographicsForm()
+        return render(request, "general_form.html", {"form": form})
+
+    return render(
+        request, "profile.html", {"user": user, "demographics": demographics}
+    )
+
+
+@login_required(login_url="/")
+def profile_edit(request):
+    profile = Profile.objects.get(user=request.user)
+    form = DemographicsForm(instance=profile)
+
+    if request.method == "POST":
+        form = DemographicsForm(request.POST, instance=profile)
+        if form.is_valid():
+            profile.save()
+            return redirect("profile")
+    else:
+
+        return render(request, "general_form.html", {"form": form})

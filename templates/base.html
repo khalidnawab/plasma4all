@@ -38,7 +38,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow" id="mainNav">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{% url 'home' %}">Plasma4all</a>
-                <li class="nav-item text-black">{{ user.get_username }}</li>
+                <a class="navbar-brand" href="{% url 'profile' %}">{{ user.get_username }}</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>

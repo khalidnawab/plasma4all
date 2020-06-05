@@ -22,7 +22,9 @@ urlpatterns = [
     path("completed/plasma/", views.CompletedPlasmaRequestsList.as_view(), name="completed_plasma_requests"),
     path("completed/plasma/<int:pk>/", views.PlasmaRequestDetail.as_view(), name="completed_plasma_detail"),
     path("completed/donate/<int:pk>/", views.DonationRequestDetail.as_view(), name="completed_donation_detail"),
-    #path("mark_done/<int:pk>/", views.RequestDetail.as_view(), name="mark_done"),
+    path("profile/", views.profile_page, name="profile"),
+    path("profile/edit/", views.profile_edit, name="edit_profile"),
+
 ]
 
 
