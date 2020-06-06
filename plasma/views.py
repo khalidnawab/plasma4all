@@ -122,12 +122,12 @@ class PlasmaRequestsList(LoginRequiredMixin, generic.ListView):
 """using generic detailview to render the page to display details of the note item."""
 
 
-class PlasmaRequestDetail(generic.DetailView):
+class PlasmaRequestDetail(LoginRequiredMixin, generic.DetailView):
     model = Profile
     template_name = "plasma_request_detail.html"
 
 
-class DonationRequestDetail(generic.DetailView):
+class DonationRequestDetail(LoginRequiredMixin, generic.DetailView):
     model = Profile
     template_name = "donation_request_detail.html"
 
