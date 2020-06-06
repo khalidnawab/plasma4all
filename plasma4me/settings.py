@@ -130,13 +130,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'drk.helper@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-ADMIN_EMAIL = os.environ['ADMIN_EMAIL']
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', "password")
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', "admin@example.com")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = "/accounts/login/"
 
