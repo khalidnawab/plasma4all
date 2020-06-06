@@ -20,7 +20,15 @@ PROVINCES = (
     (8, "FATA"),
 )
 
-
+BLOOD = (
+    (0, "A+"),
+    (1, "A-"),
+    (2, "O+"),
+    (3, "O-"),
+    (4, "AB+"),
+    (5, "AB-"),
+    (6, "Unknown"),
+)
 # Create your models here.
 
 
@@ -33,7 +41,7 @@ class Profile(models.Model):
     gender = models.IntegerField(choices=GENDER, default=3)
     phone = models.IntegerField(default=0)
     date_COVID_19_diagnosed = models.DateField(null=True, blank=True)
-    blood_group=models.CharField(max_length=15, blank=True)
+    blood_group=models.IntegerField(choices=BLOOD)
     hospital_which_labelled_positive = models.CharField(max_length=30, blank=True)
     hospital_which_labelled_negative = models.CharField(max_length=30, blank=True)
     lab_which_labelled_positive = models.CharField(max_length=30, blank=True)
