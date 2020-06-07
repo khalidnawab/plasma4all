@@ -73,14 +73,17 @@ def demographics_form(request):
 def submitted(request, id):
     if Profile.objects.filter(user=request.user).exists():
         user = Profile.objects.get(user=request.user)
-        if id == 2:
+        if id == 2 and not user.donation_request:
             user.donation_request = True
             user.save()
             user_request = "donation"
-        elif id == 1:
+        elif id == 1 and not user.plasma_request:
             user.plasma_request = True
             user.save()
             user_request = "Plasma"
+        else:
+            messages.warning(request, 'You have already submitted a request, our team will contact you soon. Thank you for your patience.')
+            return redirect("home")
         send_mail(
             'New Request for {}'.format(user_request),
             'You have a new request for {}'.format(user_request),
@@ -92,7 +95,6 @@ def submitted(request, id):
     else:
         messages.warning(request, 'You need to fill this form before you can submit a request.')
         return redirect('profile')
-
 
 
 class DonationRequestsList(LoginRequiredMixin, generic.ListView):
@@ -186,6 +188,7 @@ class CompletedPlasmaRequestsList(LoginRequiredMixin, generic.ListView):
             Profile.objects.filter(plasma_completed=1)
                 .order_by("-created_on")
         )
+
 
 @login_required(login_url="/")
 def profile_page(request):
