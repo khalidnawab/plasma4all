@@ -13,7 +13,6 @@ psycopg2-binary = "*"
 whitenoise = "*"
 django-heroku = "*"
 djangorestframework = "*"
-rest-auth = "*"
 django-rest-auth = "*"
 
 [requires]
