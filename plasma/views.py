@@ -9,7 +9,6 @@ from django.views import generic
 from plasma4me.settings import ADMIN_EMAIL
 from django.contrib import messages
 
-# Create your views here.
 from plasma.forms import SignUpForm, DemographicsForm
 
 

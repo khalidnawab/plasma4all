@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "plasma",
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
+    'api',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_auth',
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 from plasma.models import Profile
+from django.contrib.auth.models import User
 """serializer class for generating json for the Demographics table."""
 
 
@@ -7,3 +8,17 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'password', 'first_name', 'last_name', 'email')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
