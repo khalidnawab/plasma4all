@@ -9,7 +9,7 @@ from django.views import generic
 from plasma4me.settings import ADMIN_EMAIL
 from django.contrib import messages
 
-from plasma.forms import SignUpForm, DemographicsForm
+from plasma.forms import SignUpForm, DemographicsForm, DonorForm, RecipentForm
 
 
 def signup(request):
@@ -22,7 +22,7 @@ def signup(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect("demographics")
+            return redirect("home")
     else:
         form = SignUpForm()
     return render(request, "signup.html", {"form": form})
@@ -65,6 +65,52 @@ def demographics_form(request):
             return redirect("home")
     else:
         form = DemographicsForm
+    return render(request, "demographics_form.html", {"form": form})
+
+@login_required(login_url="/")
+def donor_form(request):
+    if request.method == "POST":
+        form = DonorForm(request.POST)
+        if form.is_valid():
+            new_profile = form.save(commit=False)
+            new_profile.donation_request = 1
+            new_profile.author = request.user
+            new_profile.save()
+            send_mail(
+                'New Plasma Donor Registered',
+                'You have a new request for plasma donation.',
+                'from@example.com',
+                [ADMIN_EMAIL],
+                fail_silently=False,
+            )
+            messages.warning(request,
+                             'Request for plasma donation has been successfully received, we will get in touch soon.')
+            return redirect("home")
+    else:
+        form = DonorForm
+    return render(request, "demographics_form.html", {"form": form})
+
+
+@login_required(login_url="/")
+def recipent_form(request):
+    if request.method == "POST":
+        form = RecipentForm(request.POST)
+        if form.is_valid():
+            new_profile = form.save(commit=False)
+            new_profile.plasma_request = 1
+            new_profile.author = request.user
+            new_profile.save()
+            send_mail(
+                'New Plasma Request Registered',
+                'You have a new request for plasma.',
+                'from@example.com',
+                [ADMIN_EMAIL],
+                fail_silently=False,
+            )
+            messages.warning(request, 'Request for plasma donor has been successfully received, we will get in touch soon.')
+            return redirect("home")
+    else:
+        form = RecipentForm
     return render(request, "demographics_form.html", {"form": form})
 
 
