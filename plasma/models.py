@@ -43,7 +43,7 @@ class Profile(models.Model):
     province = models.IntegerField(choices=PROVINCES, default=4)
     birth_date = models.DateField(null=True, blank=True)
     gender = models.IntegerField(choices=GENDER, default=3)
-    phone = models.IntegerField(blank=True)
+    phone = models.IntegerField(null=True, blank=True)
     date_covid_19_diagnosed = models.DateField(null=True, blank=True)
     blood_group = models.IntegerField(choices=BLOOD, default=8)
     hospital_which_labelled_positive = models.CharField(max_length=30, blank=True)
