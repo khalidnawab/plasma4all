@@ -20,20 +20,32 @@ PROVINCES = (
     (8, "FATA"),
 )
 
-
+BLOOD = (
+    (0, "A+"),
+    (1, "A-"),
+    (2, "B+"),
+    (3, "B-"),
+    (4, "O+"),
+    (5, "O-"),
+    (6, "AB+"),
+    (7, "AB-"),
+    (8, "Unknown"),
+)
 # Create your models here.
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     address = models.CharField(max_length=30, blank=True)
     city = models.CharField(max_length=30, blank=True)
     province = models.IntegerField(choices=PROVINCES, default=4)
     birth_date = models.DateField(null=True, blank=True)
     gender = models.IntegerField(choices=GENDER, default=3)
-    phone = models.IntegerField(default=0)
-    date_COVID_19_diagnosed = models.DateField(null=True, blank=True)
-    blood_group=models.CharField(max_length=15, blank=True)
+    phone = models.IntegerField(null=True, blank=True)
+    date_covid_19_diagnosed = models.DateField(null=True, blank=True)
+    blood_group = models.IntegerField(choices=BLOOD, default=8)
     hospital_which_labelled_positive = models.CharField(max_length=30, blank=True)
     hospital_which_labelled_negative = models.CharField(max_length=30, blank=True)
     lab_which_labelled_positive = models.CharField(max_length=30, blank=True)

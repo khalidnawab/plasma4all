@@ -2,7 +2,7 @@
 <html>
 
     <head>
-        <title>Plasma4all</title>
+        <title>PHOOL-Plasma Hope of Our Life</title>
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
         <meta name="google" content="notranslate" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,6 +30,7 @@
             height: auto;
             padding-bottom: 15px;
             box-shadow: 0 16px 48px #E3E7EB;
+            box-shadow: 0 16px 48px #E3E7EB;
             padding-top: 10px;
         }
     </style>
@@ -37,8 +38,12 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow" id="mainNav">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'home' %}">Plasma4all</a>
-                <a class="navbar-brand" href="{% url 'profile' %}">{{ user.get_username }}</a>
+                <a class="navbar-brand" href="{% url 'home' %}">PHOOL</a>
+                {% if not user.is_staff %}
+                <a class="navbar-brand" >{{ user.get_username }}</a>
+                    {% else %}
+                    <a class="navbar-brand">{{ user.get_username }}</a>
+                {% endif %}
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -47,11 +52,11 @@
                     <ul class="navbar-nav ml-auto">
                         {% if user.is_authenticated %}
                             <li class="nav-item text-black">
-                                <a class="nav-link text-black font-weight-bold" href="{% url 'logout'%}?next={{request.path}}">Logout</a>
+                                <a class="nav-link text-black font-weight-bold" href="{% url 'logout' %}?next={{request.path}}">Logout</a>
                             </li>
                         {% else %}
                             <li class="nav-item text-black">
-                                <a class="nav-link text-black font-weight-bold" href="{% url 'login'%}?next={{request.path}}">Login</a>
+                                <a class="nav-link text-black font-weight-bold" href="{% url 'login' %}?next={{request.path}}">Login</a>
                             </li>
                         {% endif %}
                     </ul>

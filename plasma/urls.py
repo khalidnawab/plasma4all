@@ -6,6 +6,8 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path("signup/", views.signup, name="signup"),
     path("demographics/", views.demographics_form, name="demographics"),
+    path("recipent/", views.recipent_form, name="recipent"),
+    path("donor/", views.donor_form, name="donor"),
     path("success/<int:id>/", views.submitted, name="submitted"),
     path("find/", TemplateView.as_view(template_name="find_plasma.html"), name="plasma"),
     path("", TemplateView.as_view(template_name="index.html"), name="share"),

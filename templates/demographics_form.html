@@ -23,8 +23,8 @@
         <div class="row">
             <div class=" col-md-8 col-md-10 mx-auto">
                 <div class="site-heading">
-                    <h3 class=" site-heading my-4 mt-3 text-white"> We want to know you better!</h3>
-                    <p class="text-light">Please fill the form below.</p>
+                    <h3 class=" site-heading my-4 mt-3 text-white"> Registeration Form</h3>
+                    <p class="text-light">Please fill in as many fields as you can.</p>
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Submit</button>
+    <button type="submit" onclick="return confirm('Please make sure the information is correct before submitting, proceed?')">Submit</button>
 
   </form>
 </div>

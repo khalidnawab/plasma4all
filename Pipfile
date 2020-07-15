@@ -12,6 +12,9 @@ dj-database-url = "*"
 psycopg2-binary = "*"
 whitenoise = "*"
 django-heroku = "*"
+djangorestframework = "*"
+django-rest-auth = "*"
+django-phonenumber-field = "*"
 
 [requires]
 python_version = "3.7"

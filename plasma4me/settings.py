@@ -41,8 +41,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "plasma",
     'django.contrib.sites',
+    'api',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
     'allauth',
     'allauth.account',
+    'rest_auth.registration',
 ]
 
 MIDDLEWARE = [
@@ -137,6 +142,20 @@ ADMIN_EMAIL = os.getenv('ADMIN_EMAIL', "admin@example.com")
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 LOGIN_REDIRECT_URL = "/accounts/login/"
+
+REST_FRAMEWORK = {
+    # Authentication Scheme
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    # Permission Policies
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url

@@ -9,8 +9,7 @@ from django.views import generic
 from plasma4me.settings import ADMIN_EMAIL
 from django.contrib import messages
 
-# Create your views here.
-from plasma.forms import SignUpForm, DemographicsForm
+from plasma.forms import SignUpForm, DemographicsForm, DonorForm, RecipentForm
 
 
 def signup(request):
@@ -23,7 +22,7 @@ def signup(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            return redirect("demographics")
+            return redirect("home")
     else:
         form = SignUpForm()
     return render(request, "signup.html", {"form": form})
@@ -68,19 +67,68 @@ def demographics_form(request):
         form = DemographicsForm
     return render(request, "demographics_form.html", {"form": form})
 
+@login_required(login_url="/")
+def donor_form(request):
+    if request.method == "POST":
+        form = DonorForm(request.POST)
+        if form.is_valid():
+            new_profile = form.save(commit=False)
+            new_profile.donation_request = 1
+            new_profile.author = request.user
+            new_profile.save()
+            send_mail(
+                'New Plasma Donor Registered',
+                'You have a new request for plasma donation.',
+                'from@example.com',
+                [ADMIN_EMAIL],
+                fail_silently=False,
+            )
+            messages.warning(request,
+                             'Request for plasma donation has been successfully received, we will get in touch soon.')
+            return redirect("home")
+    else:
+        form = DonorForm
+    return render(request, "demographics_form.html", {"form": form})
+
+
+@login_required(login_url="/")
+def recipent_form(request):
+    if request.method == "POST":
+        form = RecipentForm(request.POST)
+        if form.is_valid():
+            new_profile = form.save(commit=False)
+            new_profile.plasma_request = 1
+            new_profile.author = request.user
+            new_profile.save()
+            send_mail(
+                'New Plasma Request Registered',
+                'You have a new request for plasma.',
+                'from@example.com',
+                [ADMIN_EMAIL],
+                fail_silently=False,
+            )
+            messages.warning(request, 'Request for plasma donor has been successfully received, we will get in touch soon.')
+            return redirect("home")
+    else:
+        form = RecipentForm
+    return render(request, "demographics_form.html", {"form": form})
+
 
 @login_required(login_url="/")
 def submitted(request, id):
     if Profile.objects.filter(user=request.user).exists():
         user = Profile.objects.get(user=request.user)
-        if id == 2:
+        if id == 2 and not user.donation_request:
             user.donation_request = True
             user.save()
             user_request = "donation"
-        elif id == 1:
+        elif id == 1 and not user.plasma_request:
             user.plasma_request = True
             user.save()
             user_request = "Plasma"
+        else:
+            messages.warning(request, 'You have already submitted a request, our team will contact you soon. Thank you for your patience.')
+            return redirect("home")
         send_mail(
             'New Request for {}'.format(user_request),
             'You have a new request for {}'.format(user_request),
@@ -92,7 +140,6 @@ def submitted(request, id):
     else:
         messages.warning(request, 'You need to fill this form before you can submit a request.')
         return redirect('profile')
-
 
 
 class DonationRequestsList(LoginRequiredMixin, generic.ListView):
@@ -122,12 +169,12 @@ class PlasmaRequestsList(LoginRequiredMixin, generic.ListView):
 """using generic detailview to render the page to display details of the note item."""
 
 
-class PlasmaRequestDetail(generic.DetailView):
+class PlasmaRequestDetail(LoginRequiredMixin, generic.DetailView):
     model = Profile
     template_name = "plasma_request_detail.html"
 
 
-class DonationRequestDetail(generic.DetailView):
+class DonationRequestDetail(LoginRequiredMixin, generic.DetailView):
     model = Profile
     template_name = "donation_request_detail.html"
 
@@ -186,6 +233,7 @@ class CompletedPlasmaRequestsList(LoginRequiredMixin, generic.ListView):
             Profile.objects.filter(plasma_completed=1)
                 .order_by("-created_on")
         )
+
 
 @login_required(login_url="/")
 def profile_page(request):
