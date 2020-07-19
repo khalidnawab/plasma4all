@@ -67,7 +67,7 @@
 <div class="container-fluid row">
     <div class="col-lg-2  navbar-light bg-light"><p>Sidebar</p>
     {% if user.is_staff %}
-        <ul class="sidebar text-black">
+        <ul class="sidebar text-black list-unstyled">
         <li class="nav-item">
             <a class="nav-link text-black" href = "{% url 'plasma_requests' %}" title="Plasma Requests">Plasma Requests</a>
         </li>
@@ -77,7 +77,7 @@
         </ul>
         {% endif %}
     </div>
-    <div class="col-lg-10">
+    <div class="col-lg-10 mt-auto">
                     {% block content %}
         <!-- Content Goes here -->
         {% endblock content %}
@@ -85,7 +85,7 @@
 </div>
 
         <!-- Footer -->
-        <footer class="bg-grey footer">
+        <footer class="bg-grey footer fixed-bottom py-3">
             <p class="m-0 text-dark text-center ">Get help and help others, sharing is caring, please share our website/application with others.</p>
         </footer>
     </body>
