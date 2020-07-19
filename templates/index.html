@@ -41,40 +41,14 @@ donors and recipient ensure their well being by following the directions from th
     <div class="row justify-content-center">
         {%  if user.is_authenticated %}
             {% load static %}
-             {% if user.is_staff %}
-          <div class="container-fluid ">
+
+                                 <div class="container-fluid ">
             <div class="col">
                 <div class="row justify-content-center">
 
                 <div class="col-md-2 card mb-4  mt-3">
 
-                 <a href="{% url 'plasma_requests' %}" title="Requests for Plasma.">
-                    <img class="mx-auto d-block" src="{% static "icons/plasma_request.svg" %}"style="width:140px;height:185px;border:0;">
-                 </a>
-                </div>
-                <div class="col-md-2 card mb-4  mt-3">
-                 <a href="{% url 'donation_requests' %}" title="Requests for Donation.">
-                    <img class="mx-auto d-block" src="{% static "icons/donation_request.svg" %}" style="width:140px;height:185px;border:0;">
-                 </a>
-                 </div>
-
-                </div>
-
-            <br>
-            <br>
-            </div>
-        </div>
-
-
-                 {% else %}
-
-                 <div class="container-fluid ">
-            <div class="col">
-                <div class="row justify-content-center">
-
-                <div class="col-md-2 card mb-4  mt-3">
-
-                 <a href="{% url 'recipent' %}" title="Find recovered COVID-19 patients in your area for potential plasma donation.">
+                 <a href="{% url 'recipient' %}" title="Find recovered COVID-19 patients in your area for potential plasma donation.">
                     <img class="mx-auto d-block" src="{% static "icons/recieve.svg" %}"style="width:140px;height:185px;border:0;">
                      <figcaption><small>Me or someone I know is a COVID 19 patient and doctor has recommended a plasma transfusion
                          therefore I am looking for a donor.</small></figcaption>
@@ -84,6 +58,32 @@ donors and recipient ensure their well being by following the directions from th
                  <a href="{% url 'donor' %}" title="Donate plasma to help someone if you have recovered from COVID-19.">
                     <img class="mx-auto d-block" src="{% static "icons/donate.svg" %}" style="width:140px;height:185px;border:0;">
                      <figcaption><small>I am a person who recovered from COVID 19 and want to donate my plasma.</small></figcaption>
+                 </a>
+                 </div>
+
+                </div>
+
+            <br>
+            <br>
+            </div>
+        </div>
+                 {% if user.is_staff %}
+
+          <div class="container-fluid ">
+            <div class="col">
+                <div class="row justify-content-center">
+
+                <div class="col-md-2 card mb-4  mt-3">
+
+                 <a href="{% url 'plasma_requests' %}" title="Requests for Plasma.">
+                    <img class="mx-auto d-block" src="{% static "icons/plasma_request.svg" %}"style="width:140px;height:185px;border:0;">
+                     <figcaption><small>Look at Plasma Requests</small></figcaption>
+                 </a>
+                </div>
+                <div class="col-md-2 card mb-4  mt-3">
+                 <a href="{% url 'donation_requests' %}" title="Requests for Donation.">
+                    <img class="mx-auto d-block" src="{% static "icons/donation_request.svg" %}" style="width:140px;height:185px;border:0;">
+                     <figcaption><small>Look at Donation Requests</small></figcaption>
                  </a>
                  </div>
 
