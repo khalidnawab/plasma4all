@@ -9,7 +9,7 @@ from django.views import generic
 from plasma4me.settings import ADMIN_EMAIL
 from django.contrib import messages
 
-from plasma.forms import SignUpForm, DemographicsForm, DonorForm, RecipentForm
+from plasma.forms import SignUpForm, DemographicsForm, DonorForm, RecipientForm
 
 
 def signup(request):
@@ -92,9 +92,9 @@ def donor_form(request):
 
 
 @login_required(login_url="/")
-def recipent_form(request):
+def recipient_form(request):
     if request.method == "POST":
-        form = RecipentForm(request.POST)
+        form = RecipientForm(request.POST)
         if form.is_valid():
             new_profile = form.save(commit=False)
             new_profile.plasma_request = 1
@@ -110,7 +110,7 @@ def recipent_form(request):
             messages.warning(request, 'Request for plasma donor has been successfully received, we will get in touch soon.')
             return redirect("home")
     else:
-        form = RecipentForm
+        form = RecipientForm
     return render(request, "demographics_form.html", {"form": form})
 
 

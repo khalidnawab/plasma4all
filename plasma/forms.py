@@ -43,7 +43,7 @@ class DonorForm(forms.ModelForm):
         }
 
 
-class RecipentForm(forms.ModelForm):
+class RecipientForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ["author", "plasma_request", "plasma_completed", "donation_request", "donation_completed",
