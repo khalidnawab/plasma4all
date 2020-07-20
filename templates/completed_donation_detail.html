@@ -6,7 +6,7 @@
     <div class="card my-4">
     <h6 class="card-header">{% block title %} {{ object.user}}  | {{ object.created_on }} {% endblock title %}</h6>
       <div class="card-body">
-          <p class="card-text ">Name: {{ object.user.get_full_name }}</p>
+          <p class="card-text ">Name: {{ object.first_name }} {{ object.last_name }}</p>
           <p class="card-text ">Gender: {{ object.get_gender_display}}</p>
           <p class="card-text ">DOB: {{ object.birth_date}}</p>
           <p class="card-text ">Phone: {{ object.phone}}</p>

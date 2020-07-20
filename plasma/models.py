@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -39,11 +40,13 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     address = models.CharField(max_length=30, blank=True)
-    city = models.CharField(max_length=30, blank=True)
+    city = models.CharField(max_length=30)
     province = models.IntegerField(choices=PROVINCES, default=4)
     birth_date = models.DateField(null=True, blank=True)
     gender = models.IntegerField(choices=GENDER, default=3)
-    phone = models.IntegerField(null=True, blank=True)
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     date_covid_19_diagnosed = models.DateField(null=True, blank=True)
     blood_group = models.IntegerField(choices=BLOOD, default=8)
     hospital_which_labelled_positive = models.CharField(max_length=30, blank=True)

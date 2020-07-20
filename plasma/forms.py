@@ -37,6 +37,7 @@ class DonorForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ["author", "plasma_request", "plasma_completed", "donation_request", "donation_completed"]
+        help_texts = {'first_name': "*", 'last_name': "*", 'city': "*", 'gender': "*"}
         widgets = {
             'birth_date': DateInput(),
             'date_covid_19_diagnosed': DateInput(),
@@ -48,6 +49,7 @@ class RecipientForm(forms.ModelForm):
         model = Profile
         exclude = ["author", "plasma_request", "plasma_completed", "donation_request", "donation_completed",
                    "hospital_which_labelled_negative", "lab_which_labelled_negative"]
+        help_texts = {'first_name': "*", 'last_name': "*", 'city': "*", 'gender': "*"}
         widgets = {
             'birth_date': DateInput(),
             'date_covid_19_diagnosed': DateInput(),
